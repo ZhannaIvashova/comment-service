@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/styles/normalize.css">
+  <link rel="stylesheet" href="./assets/styles/style.css">
+  <title>Document</title>
+</head>
+<body>
+  <main>
+    <h1>Сервис комментариев со спам фильтром</h1>
+    <div class="service">
+      <div class="service__info">
+        <h2>Оставьте ваш комментарий</h2>
+        <div class="service__info-name">
+          <label for="name">Введите ваше Имя:</label>
+          <input id="name" name="userName" type="text">
+        </div>
+        <div class="service__info-link">
+          <label for="link">Введите ссылку <b>вашего аватара</b>:</label>
+          <input id="link" type="text">
+        </div>
+        <div class="service__info-comment">
+          <label for="comment">Оставьте комментарий:</label>
+          <textarea id="comment" name="userComment" cols="30" rows="10"></textarea>
+        </div>
+        <button class="service__info-btn">Отправить</button>
+      </div>
+      <div class="service__chat">
+        <h2>Чат</h2>
+        <!--<div class="service__chat-identity">
+          <img class="service__chat-identity-avatar">
+          <div class="service__chat-identity-name"></div>
+        </div>
+        <div class="service__chat-comment"></div>
+        <div class="service__chat-border"></div>-->
+      </div>
+    </div>
+  </main>
+
+  <script src="./index.js"></script>
+</body>
+</html>

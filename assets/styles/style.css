@@ -1,0 +1,91 @@
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid red;
+}
+
+h1, label, input, textarea, .service__chat-identity-name, .service__chat-comment, .service__info-btn {
+  color: white;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin: 20px 0;
+  color: rgb(153, 201, 234);
+}
+
+input, textarea, input:focus, textarea:focus {
+  padding: 10px;
+  border: 2px dashed rgb(153, 201, 234);
+  background-color: black;
+  outline: none;
+  caret-color: white;
+}
+
+.service {
+  display: flex;
+}
+
+.service__info {
+  width: 30%;
+  margin-right: 10em;
+}
+
+.service__info-name, .service__info-link, .service__info-comment {
+  display: flex;
+  flex-direction: column;
+}
+
+.service__info-link {
+  margin: 40px 0;
+}
+
+.service__info-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: rgb(34, 91, 129);
+  border: 1px solid red;
+}
+
+.service__chat {
+  width: 60%;
+}
+
+.service__chat-identity-avatar {
+  width: 100px;
+}
+
+/*Дополнительно добавляю стили*/
+.cursor {
+  cursor: pointer;
+}
+
+.service__chat-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.service__chat-comment {
+  word-wrap: break-word;
+}
+
+.service__chat-border {
+  border: 2px dashed rgb(153, 201, 234);
+  margin-bottom: 20px;
+}
