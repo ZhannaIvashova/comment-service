@@ -12,10 +12,9 @@ main {
   width: 1200px;
   margin: 0 auto;
   padding: 30px;
-  border: 1px solid red;
 }
 
-h1, label, input, textarea, .service__chat-identity-name, .service__chat-comment, .service__info-btn {
+h1, label, input, textarea, .service__chat-identity-name, .service__chat-comment, .service__info-btn, .service__info-displayname {
   color: white;
 }
 
@@ -24,7 +23,7 @@ label {
 }
 
 h2 {
-  margin: 20px 0;
+  margin: 10px 0;
   color: rgb(153, 201, 234);
 }
 
@@ -45,6 +44,16 @@ input, textarea, input:focus, textarea:focus {
   margin-right: 10em;
 }
 
+.service__info-displayname {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 30px;
+}
+
+#radioBtnYes, #radioBtnNo {
+  margin-left: 20px;
+}
+
 .service__info-name, .service__info-link, .service__info-comment {
   display: flex;
   flex-direction: column;
@@ -58,7 +67,6 @@ input, textarea, input:focus, textarea:focus {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: rgb(34, 91, 129);
-  border: 1px solid red;
 }
 
 .service__chat {
@@ -74,6 +82,16 @@ input, textarea, input:focus, textarea:focus {
   cursor: pointer;
 }
 
+.display {
+  display: none;
+}
+
+.service__chat-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .service__chat-identity {
   display: flex;
   align-items: center;
@@ -81,11 +99,16 @@ input, textarea, input:focus, textarea:focus {
   margin-bottom: 10px;
 }
 
+.service__chat-date {
+  color: rgb(153, 201, 234);
+  font-size: 14px;
+}
+
 .service__chat-comment {
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .service__chat-border {
   border: 2px dashed rgb(153, 201, 234);
-  margin-bottom: 20px;
+  margin: 5px 0 20px;
 }
