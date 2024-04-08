@@ -1,61 +1,112 @@
 const button = document.querySelector('.service__info-btn');
+const radioBtnYes = document.getElementById('radioBtnYes');
+const radioBtnNo = document.getElementById('radioBtnNo');
+const serviceInfoName = document.querySelector('.service__info-name');
 const inputName = document.getElementById('name');
 const inputLink = document.getElementById('link');
 const inputComment = document.getElementById('comment');
 const serviceChat = document.querySelector('.service__chat');
 
-userData = [
-    inputName,
-    inputComment
-];
 
-spamList = [
+const spamList = [
     /viagra/gi,
     /XXX/gi,
     /ХХХ/gi //русская раскладка
 ];
 
+const avatarList = [
+    './assets/images/default-img-1.jpg',
+    './assets/images/default-img-2.jpg',
+    './assets/images/default-img-3.jpg',
+    './assets/images/default-img-4.jpg',
+    './assets/images/default-img-5.jpg',
+    './assets/images/default-img-6.jpg',
+]
 
-button.addEventListener('mouseover', () => {
-    button.classList.toggle('cursor');
-});
+
+button.addEventListener('mouseover', () => button.classList.toggle('cursor'));
+
+radioBtnNo.addEventListener('click', () => serviceInfoName.classList.add('display'));
+radioBtnYes.addEventListener('click', () => serviceInfoName.classList.remove('display'));
 
 
-function checkSpam(item) {
-    let userComment = item;
+//Функция проверяет время на наличие первого символа '0' и добавляет его если нужно
+timeWithLeadingZero = (number) => number < 10 ? '0' + number : number;
+
+//Текущая дата и время
+function currentDateTime() {
+    let currentDate = new Date();
+
+    let currentYear = currentDate.getFullYear();
+    let currentMonth = currentDate.getMonth() + 1;
+    let currentDateofMonth = currentDate.getDate();
+
+    let currentHours = timeWithLeadingZero(currentDate.getHours());
+    let currentMinutes = timeWithLeadingZero(currentDate.getMinutes());
+    let currentSeconds = timeWithLeadingZero(currentDate.getSeconds());
+
+    return `${currentYear}/${currentMonth}/${currentDateofMonth} ${currentHours}:${currentMinutes}:${currentSeconds}`;
+}
+
+//Валидация имени
+function validationName(userName) {
+    let isValidUserName = /^[a-zA-Z]+$/.test(userName) || /^[а-яА-яёЁ]+$/.test(userName);
+    if (!isValidUserName) {
+        alert(`1. Имя должно состоять из букв (только латиница или кириллица) \n2. Также вы можете скрыть свое имя`);
+        return false;
+    }
+    return true;
+}
+
+//Перевод первого символа в верхний регистр, в случае, если значение существует
+function checkName(userName) {
+    if (validationName(userName)) {
+        userName = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
+    } else {
+        return false
+    }
+    return userName
+}
+
+//Получение имени пользователя
+function getUserName() {
+    if (serviceInfoName.classList.contains('display')) {
+        return 'Username';
+    } else {
+        return checkName(inputName.value.trim());
+    }
+}
+
+//Проверка на спам
+function checkSpam(userComment) {
     for(let spam of spamList) {
         userComment = userComment.replace(spam, '***');
     }
     return userComment;
 }
 
-
-function checkInput() {
-    
-    let userName = '';
-    let userComment = '';
-
-    for(let data of userData) {
-        let item = data.value.trim();
-        
-        //Проверка поля userName
-        if (data === inputName) {
-            if ((/^[a-zA-Z]+$/.test(item) || /^[а-яА-яёЁ]+$/.test(item)) == false) {
-                return alert(`Поле ${data.name} должно состоять из букв (только латиница или кариллица)`);
-            }
-            userName = item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
-        };
-        
-        //Проверка поля userComment
-        if (data === inputComment) {
-            userComment = checkSpam(item);
-        }
-    };
-    addData(userName, userComment);
+//Присвоение дефолтного аватара
+function defaultAvatar() {
+    numberIndex = Math.floor(Math.random() * avatarList.length);
+    return avatarList[numberIndex];
 }
 
 
-function addData(userName, userComment) {
+function addData() {
+    let userName = getUserName();
+    if (userName === false) return;
+
+    let userComment = checkSpam(inputComment.value.trim());
+
+    let userAvatar = inputLink.value;
+    if (!inputLink.value) {
+        userAvatar = defaultAvatar();
+    }
+
+    //Новый тег с общей информацией
+    const newElemInfo = document.createElement('div');
+    newElemInfo.classList.add('service__chat-info');
+
     //Новый тег с личной информацией
     const newElemIdentity = document.createElement('div');
     newElemIdentity.classList.add('service__chat-identity');
@@ -63,7 +114,7 @@ function addData(userName, userComment) {
     //Новый тег для аватара
     const newElemAvatar = document.createElement('img');
     newElemAvatar.classList.add('service__chat-identity-avatar');
-    newElemAvatar.src = inputLink.value;
+    newElemAvatar.src = userAvatar;
     newElemAvatar.alt = 'img';
     
     //Новый тег для имени
@@ -71,9 +122,18 @@ function addData(userName, userComment) {
     newElemName.classList.add('service__chat-identity-name');
     newElemName.textContent = userName;
     
+    //Новый тег для даты
+    const newElemDate = document.createElement('div');
+    newElemDate.classList.add('service__chat-date');
+    newElemDate.textContent = currentDateTime();
+
     //Добавляю в тег с личной информацией детей: аватар, имя
     newElemIdentity.appendChild(newElemAvatar);
     newElemIdentity.appendChild(newElemName);
+
+    //Добавляю в тег с информацией детей: личная информация, дата
+    newElemInfo.appendChild(newElemIdentity);
+    newElemInfo.appendChild(newElemDate);
 
     //Новый тег для комментария
     const newElemComment = document.createElement('div');
@@ -84,17 +144,20 @@ function addData(userName, userComment) {
     const newElemBorder = document.createElement('div');
     newElemBorder.classList.add('service__chat-border');
 
-    //Добавляю в тег с чатом детей: личная информация, комментарий, граница
-    serviceChat.appendChild(newElemIdentity);
+    //Добавляю в тег с чатом детей: информация, комментарий, граница
+    serviceChat.appendChild(newElemInfo);
     serviceChat.appendChild(newElemComment);
     serviceChat.appendChild(newElemBorder);
     
+    serviceInfoName.classList.remove('display');
+    radioBtnYes.checked = true;
     inputName.value = '';
     inputLink.value = '';
     inputComment.value = '';
 }
 
-button.addEventListener('click', checkInput);
+
+button.addEventListener('click', addData);
 
 
 //Тестовые ссылки
